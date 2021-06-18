@@ -1,9 +1,6 @@
 import { createStyled } from "./styled";
 
-const styled = createStyled({
-  colors: {},
-  fontSizes: {},
-});
+const styled = createStyled();
 
 export interface ButtonProps {
   type?: "default" | "primary" | "secondary";
@@ -13,13 +10,9 @@ export interface ButtonProps {
 export const Button = styled.button<ButtonProps>`
   background: black;
   color: white;
-  font-size: 14px;
-  padding: 4px;
+  font-size: 14;
+  padding: 4;
   border: none;
-`;
-
-Button.type("primary")`
-  background: blue;
 `;
 
 Button.type("primary")`
