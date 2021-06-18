@@ -8,11 +8,8 @@ export interface ButtonProps {
 }
 
 export const Button = styled.button<ButtonProps>`
-  background: black;
-  color: white;
-  font-size: 14;
-  padding: 4;
-  border: none;
+  --layout: row;
+  --layout-gap: 8px, 12px;
 `;
 
 Button.type("primary")`
