@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { Property } from "csstype";
 
 /**
  * Setup | Atoms
@@ -37,7 +37,7 @@ const intentions = {
 
 type Multi<T> = T[] | T;
 
-type Style = Partial<{
+type Props = Partial<{
   layout: "row" | "column";
   background: Multi<string>;
   padding: Multi<number>;
@@ -49,21 +49,35 @@ type Style = Partial<{
   userSelect: boolean;
 }>;
 
-type Variants<T extends string> = Record<T, Style>;
+// type Variants<N extends string> = Record<N, Props>;
+type Variants<N extends string> = Record<N, Props>;
+
+class Style<V extends Variants<any>> {
+  private props: Props;
+  private variants: V;
+
+  constructor(props: Props, variants: V) {
+    this.props = props;
+    this.variants = variants;
+  }
+
+  variant<N extends string>(name: N, props: Props): Style<V & N> {
+    return new Style(this.props, { ...this.variants, [name]: props });
+  }
+}
 
 /**
  * Setup | Tooling
  */
 
-function component<T extends string>(
-  style: Style,
-  variants?: Variants<T>
-): FC {}
+export function style(props: Props): Style<{}> {
+  return new Style(props, {});
+}
 
 /**
  * Usage | Design Language
  */
-const button: Style = {
+export const button = style({
   padding: [0, 20],
   minWidth: 40,
   borderRadius: 4,
@@ -72,10 +86,6 @@ const button: Style = {
   fontSize: 16,
   whiteSpace: "nowrap",
   userSelect: false,
-};
-
-const positive: Style = {
+}).variant("positive", {
   background: "#13ce66",
-};
-
-const Button = component(button, { positive });
+});
