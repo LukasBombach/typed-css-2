@@ -1,0 +1,9 @@
+{
+  "name": "custom-css",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "csstype": "3.0.8"
+  }
+}
