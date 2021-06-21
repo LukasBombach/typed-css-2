@@ -49,16 +49,19 @@ type Style = Partial<{
   userSelect: boolean;
 }>;
 
-type Variants<T extends string> = Record<T, Style>;
+type Variants<T extends string> = Record<T, ((value: any) => Style) | Style>;
 
 /**
  * Setup | Tooling
  */
-
 function component<T extends string>(
   style: Style,
   variants?: Variants<T>
 ): FC {}
+
+function variant<T extends Record<string, Style>>(
+  options: T
+): (value: any) => Style {}
 
 /**
  * Usage | Design Language
@@ -78,4 +81,44 @@ const positive: Style = {
   background: "#13ce66",
 };
 
-const Button = component(button, { positive });
+const xs: Style = {
+  padding: [0, 12],
+  minWidth: 24,
+  fontSize: 12,
+};
+
+const s: Style = {
+  padding: [0, 15],
+  minWidth: 30,
+  fontSize: 14,
+};
+
+const m: Style = {
+  padding: [0, 20],
+  minWidth: 40,
+  fontSize: 16,
+};
+
+const l: Style = {
+  padding: [0, 25],
+  minWidth: 50,
+  fontSize: 16,
+};
+
+const xl: Style = {
+  padding: [0, 30],
+  minWidth: 60,
+  fontSize: 18,
+};
+
+// const size = (size: "s" | "m" | "l" | "xl") =>
+//   ({
+//     s,
+//     m,
+//     l,
+//     xl,
+//   }[size]);
+
+const size = variant({ s, m, l, xl });
+
+const Button = component(button, { positive, size });
